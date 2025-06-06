@@ -13,5 +13,6 @@ struct MinesweeperClassicApp: App {
         WindowGroup {
             ContentView()
         }
+        .windowResizability(.contentMinSize)
     }
 }

@@ -1,0 +1,168 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "💥" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💥"
+          }
+        }
+      }
+    },
+    "Columns" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spalten"
+          }
+        }
+      }
+    },
+    "Good Luck!!!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viel Glück!!!"
+          }
+        }
+      }
+    },
+    "How to play Minesweeper" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie man Minesweeper spielt"
+          }
+        }
+      }
+    },
+    "Minesweeper Classic" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minesweeper Classic"
+          }
+        }
+      }
+    },
+    "Restart" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neustart"
+          }
+        }
+      }
+    },
+    "Rows" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeilen"
+          }
+        }
+      }
+    },
+    "Start Game" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spiel Starten"
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nochmal"
+          }
+        }
+      }
+    },
+    "You loose, better luck next time!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du hast verloren. Viel Glück beim nächsten Mal!"
+          }
+        }
+      }
+    },
+    "You set a new record for %lld Fields.\nOld Time: %lld seconds\nNew Time: %lld seconds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du hast einen neuen Rekord für %1$lld Felder aufgestellt.\nAlte Zeit: %2$lld Sekunden\nNeue Zeit: %3$lld Sekunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You set a new record for %1$lld Fields.\nOld Time: %2$lld seconds\nNew Time: %3$lld seconds"
+          }
+        }
+      }
+    },
+    "You set a new record for %lld Fields.\nYour record: %lld seconds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du hast einen neuen Rekord für %1$lld Felder aufgestellt.\nDein Rekord: %2$lld Sekunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You set a new record for %1$lld Fields.\nYour record: %2$lld seconds"
+          }
+        }
+      }
+    },
+    "You win!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewonnen!"
+          }
+        }
+      }
+    },
+    "Your target is to find all mines. When no field has been tapped, simply tap an arbitrary field.\nThe numbers appearing in the fields show by how many mines the certain field is surrounded.\nTo mark possible mines you can put a flag on that field by long-tapping the certain field.\nYour goal is to clear all fields that do not contain a mine." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ziel ist es, alle Minen zu finden. Wenn noch kein Feld angetippt wurde, tippe einfach ein Feld an. Die Zahlen, die in den Feldern erscheinen, zeigen an, von wie vielen Minenfeldern das jeweilige Feld umgeben ist. Um mögliche Minenfelder zu markieren, setze eine Flagge auf dieses Feld, indem du das Feld lange antippst. Das Ziel ist es, alle Felder zu öffnen, bis auf die Minen. Du hast 3 Leben, falls du eine Mine betrittst."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
