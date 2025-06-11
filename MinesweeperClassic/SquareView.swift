@@ -14,68 +14,61 @@ struct SquareView: View {
     var color: Color {
         if square.isRevealed {
             if square.hasMine {
-                return Color.red.opacity(0.3)
+                return Color.red.opacity(0.4)
             } else {
-                return Color.gray.opacity(0.3)
+                return Color.gray.opacity(0.4)
             }
-        } else {
+        } else if square.isFlagged {
+            return Color.yellow
+        }else {
             return Color.gray
         }
     }
 
     var body: some View {
         ZStack {
-//            ForEach(0..<25) { _ in
-//                Rectangle()
-//                    .rotation(Angle(degrees: Double.random(in: 0..<360)))
-//                    .fill(.gray.gradient)
-//                    .scaleEffect(square.isRevealed ? 1 : 0)
-//                    .frame(width: size/4, height: size/4)
-//                    .offset(x: square.isRevealed ? CGFloat.random(in: -1...1)*200 : 0, y: square.isRevealed ? CGFloat.random(in: -1...1)*200 : 0)
-//                    .opacity(square.isRevealed ? 0 : 1)
-//                    .animation(.easeInOut(duration: 0.8), value: square.isRevealed)
-//            }
-            
             Group {
                 Rectangle()
-                        .fill(color.gradient)
-                
+                    .fill(color.gradient)
+
                 if square.isRevealed {
                     if square.hasMine {
-                        Text("💥")
-                            .font(size > 35 ? .title : .callout)
-                            .shadow(color: .red, radius: 1)
+                        Text("💣")
+                            .font(size > 40 ? .title : .callout)
+                            .shadow(color: .yellow, radius: 2)
+                            .rotationEffect(Angle(degrees: 180))
+                            .rotation3DEffect(Angle(degrees: 180), axis: (x: 0, y: 1, z: 0))
                     } else if square.nearbyMines > 0 {
-                        switch square.nearbyMines {
-                        case 1:
-                            Text("\(square.nearbyMines)")
-                                .font(size > 35 ? .title : .callout)
-                                .foregroundStyle(.green)
-                        case 2:
-                            Text("\(square.nearbyMines)")
-                                .font(size > 35 ? .title : .callout)
-                                .foregroundStyle(.yellow)
-                        case 3:
-                            Text("\(square.nearbyMines)")
-                                .font(size > 35 ? .title : .callout)
-                                .foregroundStyle(.orange)
-                        default:
-                            Text("\(square.nearbyMines)")
-                                .font(size > 35 ? .title : .callout)
-                                .foregroundStyle(.red)
-                        }
+                        Text("\(square.nearbyMines)")
+                            .font(size > 40 ? .title : .callout)
+                            .foregroundStyle(getColorForMines(square.nearbyMines))
+                            .rotationEffect(Angle(degrees: 180))
+                            .rotation3DEffect(Angle(degrees: 180), axis: (x: 0, y: 1, z: 0))
                     }
                 } else if square.isFlagged {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .font(size > 35 ? .title : .callout)
-                        .foregroundStyle(.black, .yellow)
+                    Image(systemName: "flag.fill")
+                        .font(size > 40 ? .title : .callout)
+                        .foregroundStyle(.red)
                         .shadow(color: .black, radius: 3)
                 }
+
             }
-            .rotationEffect(.degrees(square.isRevealed ? 360 : 0))
-            .animation(.easeInOut(duration: 0.5), value: square.isRevealed)
         }
         .frame(width: size, height: size)
+        .rotation3DEffect(
+            .degrees(square.isRevealed ? 180 : 0),
+            axis: (x: 1, y: 0, z: 0)
+        )
+        .animation(.easeInOut(duration: 0.5), value: square.isRevealed)
+    }
+
+    func getColorForMines(_ count: Int) -> Color {
+        switch count {
+        case 1: return .green
+        case 2: return .yellow
+        case 3: return .orange
+        default: return .red
+        }
     }
 }
 

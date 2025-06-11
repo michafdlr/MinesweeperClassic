@@ -11,12 +11,26 @@
         }
       }
     },
+    "💣" : {
+
+    },
     "💥" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "💥"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
           }
         }
       }
@@ -31,12 +45,102 @@
         }
       }
     },
+    "Delet All" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lösche Alle"
+          }
+        }
+      }
+    },
+    "Delet Records" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lösche Rekorde"
+          }
+        }
+      }
+    },
+    "Delete All Records?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Rekorde löschen?"
+          }
+        }
+      }
+    },
+    "Delete Selected Records?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle ausgewählten Rekorde löschen?"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        }
+      }
+    },
+    "Dou you really want to delete all records?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willst du wirklich alle Rekorde löschen?"
+          }
+        }
+      }
+    },
+    "Dou you really want to delete the selected records?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willst du wirklich die ausgewählten Rekorde löschen?"
+          }
+        }
+      }
+    },
+    "Fields: %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Felder: %lld"
+          }
+        }
+      }
+    },
     "Good Luck!!!" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Viel Glück!!!"
+          }
+        }
+      }
+    },
+    "Hide Records" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verstecke Rekorde"
           }
         }
       }
@@ -61,6 +165,26 @@
         }
       }
     },
+    "Record Times" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rekorde"
+          }
+        }
+      }
+    },
+    "Record: %lld seconds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rekord: %lld Sekunden"
+          }
+        }
+      }
+    },
     "Restart" : {
       "localizations" : {
         "de" : {
@@ -77,6 +201,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zeilen"
+          }
+        }
+      }
+    },
+    "Select" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auswählen"
+          }
+        }
+      }
+    },
+    "Show Records" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeige Rekorde"
           }
         }
       }
@@ -149,6 +293,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gewonnen!"
+          }
+        }
+      }
+    },
+    "Your current record for %lld Fields: %lld seconds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein aktueller Rekord für %1$lld Felder: %2$lld Sekunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your current record for %1$lld Fields: %2$lld seconds"
           }
         }
       }

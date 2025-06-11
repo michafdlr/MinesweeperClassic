@@ -11,6 +11,9 @@ struct GameSettingsView: View {
     @Binding var rowCount: Int
     @Binding var colCount: Int
     @State private var isShowingInfo = false
+    @State private var recordsShowing = false
+    
+    var records = getAllRecords()
 
     var startGame: () -> Void
 
@@ -24,43 +27,43 @@ struct GameSettingsView: View {
                 .multilineTextAlignment(.center)
 
             HStack {
-                if UIDevice.current.userInterfaceIdiom == .pad {
+                #if os(iOS)
                     Text("Rows")
                         .font(.title3)
-                }
+                #endif
                 Picker(selection: $rowCount) {
-                    if UIDevice.current.userInterfaceIdiom == .mac {
+                    #if os(macOS)
                         ForEach(10...30, id: \.self) { i in
                             Text(String(i))
                                 .tag(i)
                         }
-                    } else {
+                    #else
                         ForEach(10...20, id: \.self) { i in
                             Text(String(i))
                                 .tag(i)
                         }
-                    }
+                    #endif
                 } label: {
                     Text("Rows")
                         .font(.title3)
                 }
                 
-                if UIDevice.current.userInterfaceIdiom == .pad {
+                #if os(iOS)
                     Text("Columns")
                         .font(.title3)
-                }
+                #endif
                 Picker(selection: $colCount) {
-                    if UIDevice.current.userInterfaceIdiom == .mac {
+                    #if os(macOS)
                         ForEach(10...30, id: \.self) { i in
                             Text(String(i))
                                 .tag(i)
                         }
-                    } else {
+                    #else
                         ForEach(10...20, id: \.self) { i in
                             Text(String(i))
                                 .tag(i)
                         }
-                    }
+                    #endif
                 } label: {
                     Text("Columns")
                         .font(.title3)
@@ -80,6 +83,22 @@ struct GameSettingsView: View {
                 }
                 .font(.title)
                 .buttonStyle(.plain)
+                
+                Button {
+                    withAnimation{
+                        recordsShowing.toggle()
+                    }
+                } label: {
+                    Text(recordsShowing ? "Hide Records": "Show Records")
+                        .padding(.horizontal)
+                        .padding(.vertical, 5)
+                        .foregroundStyle(.white)
+                        .background(.gray.gradient)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                .font(.title)
+                .buttonStyle(.plain)
+                .disabled(records.isEmpty)
 
                 Button {
                     withAnimation {
@@ -95,6 +114,11 @@ struct GameSettingsView: View {
 
             if isShowingInfo {
                 GameInfoView()
+            }
+            
+            if recordsShowing && !records.isEmpty {
+                RecordsView()
+                    .padding()
             }
         }
         .overlayStyle()

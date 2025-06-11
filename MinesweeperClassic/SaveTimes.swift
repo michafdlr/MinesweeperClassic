@@ -47,6 +47,32 @@ func createFile(file: String) {
     }
 }
 
+func getAllRecords(file: String = "records.json") -> [Int:Int] {
+    let documentURL = URL.documentsDirectory.appendingPathComponent(file)
+    let fileExists = FileManager.default.fileExists(atPath: documentURL.path)
+    if !fileExists {
+        createFile(file: file)
+    }
+    do {
+        let data = try Data(contentsOf: documentURL)
+        return try JSONDecoder().decode([Int:Int].self, from: data)
+    } catch{
+        print(error.localizedDescription)
+    }
+    return [:]
+}
+
+func deleteRecord(fieldCount: Int) {
+    var records = getAllRecords()
+    records.removeValue(forKey: fieldCount)
+    let documentURL = URL.documentsDirectory.appendingPathComponent("records.json")
+    do {
+        try JSONEncoder().encode(records).write(to: documentURL, options: [.atomic, .completeFileProtection])
+    } catch {
+        print(error.localizedDescription)
+    }
+}
+
 func getOldRecord(for squareCount: Int) -> Int {
     let documentURL = URL.documentsDirectory.appendingPathComponent("records.json")
     let fileExists = FileManager.default.fileExists(atPath: documentURL.path)
@@ -56,11 +82,9 @@ func getOldRecord(for squareCount: Int) -> Int {
         do {
             let data = try Data(contentsOf: documentURL)
             let records = try JSONDecoder().decode([Int:Int].self, from: data)
-            if records.keys.contains(where: {squareCount == $0}) {
-                print("old record: \(records[squareCount]!)")
+            if records.keys.contains(squareCount) {
                 return records[squareCount]!
             }
-            print("old record: 0")
             return 0
         } catch {
             print(error.localizedDescription)
@@ -71,7 +95,6 @@ func getOldRecord(for squareCount: Int) -> Int {
 
 func saveNew(record: RecordTime, to file: String = "records.json") throws {
     let documentURL = URL.documentsDirectory.appendingPathComponent(file)
-    print(documentURL)
     let fileExists = FileManager.default.fileExists(atPath: documentURL.path)
     if !fileExists {
         createFile(file: file)
@@ -86,9 +109,4 @@ func saveNew(record: RecordTime, to file: String = "records.json") throws {
         records[record.squareCount] = record.newTime
     }
     try JSONEncoder().encode(records).write(to: documentURL, options: [.atomic, .completeFileProtection])
-    
-    //debug
-//    let stored = try Data(contentsOf: documentURL)
-//    let decoded = try JSONDecoder().decode([Int: Int].self, from: stored)
-//    print(decoded)
 }

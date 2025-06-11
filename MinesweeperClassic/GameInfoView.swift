@@ -20,6 +20,8 @@ struct GameInfoView: View {
                 .font(.title.bold())
                 .textCase(.uppercase)
         }
+        .fontDesign(.rounded)
+        .padding()
 //        .overlayStyle()
     }
 }
