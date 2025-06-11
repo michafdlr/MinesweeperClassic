@@ -12,7 +12,8 @@ struct MinesweeperClassicApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .frame(minWidth: 400, idealWidth: 742, minHeight: 400, idealHeight: 821, alignment: .center)
         }
-        .windowResizability(.contentMinSize)
+        .windowResizability(.contentSize)
     }
 }

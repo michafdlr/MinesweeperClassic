@@ -26,139 +26,148 @@ struct ContentView: View {
         on: .main,
         in: .common
     ).autoconnect()
-    @State private var frameWidth = 600.0
-    @State private var frameHeight = 600.0
-    @State private var squareSize = 60.0
+    @State private var squareSize = 00.0
     @State private var lifesLeft = 3
+    
+    @State private var infoHeight = 75.0
 
     var body: some View {
-        ZStack {
-            VStack {
-                HStack {
+        GeometryReader { proxy in
+            ZStack {
+                VStack {
                     HStack {
-                        Text(minesLeft, format: .number.precision(.integerLength(3)))
-                            .fixedSize()
-                            .padding(.horizontal, 6)
-                            .foregroundStyle(.red.gradient)
-                            .font(.custom("Courier", size: 30))
-
-                        Button(action: reset) {
-                            HStack {
-                                Text(statusEmoji)
-                                Text("Restart")
-                                    .font(.custom("Courier", size: 20))
-                            }
-                            .padding(5)
-                            .frame(width: 150)
-                            .background(.gray.gradient.opacity(0.5))
-                            .clipShape(.rect(cornerRadius: 6))
-                        }
-                        .onHover { isHoveringRestart = $0 }
-                        .buttonStyle(.plain)
-
-                        Text(secondsElapsed, format: .number.precision(.integerLength(3)))
-                            .fixedSize()
-                            .padding(.horizontal, 6)
-                            .foregroundStyle(.red.gradient)
-                            .font(.custom("Courier", size: 30))
-                            .onReceive(timer) { _ in
-                                if gameState == .playing && secondsElapsed < 999 {
-                                    secondsElapsed += 1
+                        Image(systemName: "info.circle.fill")
+                            .font(.custom("Courier", size: textSize))
+                            .foregroundStyle(.gray.opacity(0.8))
+                            .padding(.leading, 10)
+                            .onHover { bool in
+                                withAnimation(.spring(duration: 0.5)) {
+                                    isHoveringInfo = bool
                                 }
                             }
-                    }
-                    .monospaced()
-                    .background(.black)
-                    .clipShape(.rect(cornerRadius: 10))
-
-                    HStack(spacing: 0) {
-                        ForEach(1..<4, id: \.self) { i in
-                            Image(systemName: "heart.fill")
-                                .foregroundStyle(i <= lifesLeft ? .red : .gray)
-                                .font(.largeTitle)
-                                .animation(
-                                    .linear(duration: 0.5).repeatCount(
-                                        7,
-                                        autoreverses: true
-                                    ),
-                                    value: lifesLeft
-                                )
-                        }
-                    }
-
-                    Image(systemName: "info.circle.fill")
-                        .font(.largeTitle)
-                        .foregroundStyle(.gray.opacity(0.8))
-                        .padding(.leading, 10)
-                        .onHover { bool in
-                            withAnimation(.spring(duration: 0.5)) {
-                                isHoveringInfo = bool
+                            .onTapGesture {
+                                #if os(iOS)
+                                withAnimation(.spring(duration: 0.5)) {
+                                    isHoveringInfo.toggle()
+                                }
+                                #endif
                             }
-                        }
-                        .onTapGesture {
-                            #if os(iOS)
-                            withAnimation(.spring(duration: 0.5)) {
-                                isHoveringInfo.toggle()
-                            }
-                            #endif
-                        }
-                }
-                .padding([.top, .horizontal], 5)
+                        
+                        HStack {
+                            Text(minesLeft, format: .number.precision(.integerLength(3)))
+                                .fixedSize()
+                                .padding(.horizontal, 6)
+                                .foregroundStyle(.red.gradient)
+                                .font(.custom("Courier", size: textSize))
 
-                Grid(horizontalSpacing: 2, verticalSpacing: 2) {
-                    ForEach(0..<rows.count, id: \.self) { row in
-                        GridRow {
-                            ForEach(rows[row]) { square in
-                                SquareView(square: square, size: squareSize)
-                                    .onLongPressGesture {
-                                        flag(square)
+                            Button{
+                                reset(screenWidth: proxy.size.width, screenHeight: proxy.size.height)
+                            } label: {
+                                HStack {
+                                    Text(statusEmoji)
+                                    Text("Restart")
+                                        .font(.custom("Courier", size: textSize))
+                                }
+                                .padding(5)
+                                .frame(width: 150)
+                                .background(.gray.gradient.opacity(0.5))
+                                .clipShape(.rect(cornerRadius: 6))
+                            }
+                            .onHover { isHoveringRestart = $0 }
+                            .buttonStyle(.plain)
+
+                            Text(secondsElapsed, format: .number.precision(.integerLength(3)))
+                                .fixedSize()
+                                .padding(.horizontal, 6)
+                                .foregroundStyle(.red.gradient)
+                                .font(.custom("Courier", size: textSize))
+                                .onReceive(timer) { _ in
+                                    if gameState == .playing && secondsElapsed < 999 {
+                                        secondsElapsed += 1
                                     }
-                                    .onTapGesture {
-                                        select(square)
-                                    }
+                                }
+                        }
+                        .monospaced()
+                        .background(.black)
+                        .clipShape(.rect(cornerRadius: 10))
+
+                        HStack(spacing: 0) {
+                            ForEach(1..<4, id: \.self) { i in
+                                Image(systemName: "heart.fill")
+                                    .foregroundStyle(i <= lifesLeft ? .red : .gray)
+                                    .font(.custom("Courier", size: textSize))
+                                    .animation(
+                                        .linear(duration: 0.5).repeatCount(
+                                            7,
+                                            autoreverses: true
+                                        ),
+                                        value: lifesLeft
+                                    )
                             }
                         }
                     }
-                }
-                .font(.largeTitle)
-                .preferredColorScheme(.dark)
-                .clipShape(.rect(cornerRadius: 6))
-                .padding([.horizontal, .bottom], 5)
-                .transition(.scale(scale: 2).combined(with: .opacity))
-                .onAppear {
-                    createGrid()
-                }
-            }
-            .opacity(gameState == .playing || gameState == .waiting ? 1.0 : 0.5)
-            .disabled(gameState == .setting || gameState == .won || gameState == .lost)
+                    .frame(width: proxy.size.width, height: infoHeight)
+                    .padding([.top, .horizontal], 5)
 
-            if gameState == .won || gameState == .lost {
-                GameOverView(
-                    gameState: gameState,
-                    squareCount: allSquares.count,
-                    secondsElapsed: secondsElapsed
-                ) {
-                    withAnimation {
-                        reset()
+                    Grid(horizontalSpacing: 2, verticalSpacing: 2) {
+                        ForEach(0..<rows.count, id: \.self) { row in
+                            GridRow {
+                                ForEach(rows[row]) { square in
+                                    SquareView(square: square, size: squareSize)
+                                        .onLongPressGesture {
+                                            flag(square)
+                                        }
+                                        .onTapGesture {
+                                            select(square)
+                                        }
+                                }
+                            }
+                        }
+                    }
+                    .font(.largeTitle)
+                    .preferredColorScheme(.dark)
+                    .clipShape(.rect(cornerRadius: 8))
+                    .padding([.horizontal, .bottom], 5)
+                    .transition(.scale(scale: 2).combined(with: .opacity))
+                    .onAppear {
+                        createGrid(screenWidth: proxy.size.width, screenHeight: proxy.size.height)
                     }
                 }
-            }
+                .opacity(gameState == .playing || gameState == .waiting ? 1.0 : 0.5)
+                .disabled(gameState == .setting || gameState == .won || gameState == .lost)
 
-            if gameState == .setting {
-                GameSettingsView(rowCount: $rowCount, colCount: $colCount) {
-                    withAnimation(.spring(duration: 1)) {
-                        createGrid(rowCount: rowCount, colCount: colCount)
-                        gameState = .waiting
+                if gameState == .won || gameState == .lost {
+                    GameOverView(
+                        gameState: gameState,
+                        squareCount: allSquares.count,
+                        secondsElapsed: secondsElapsed
+                    ) {
+                        withAnimation {
+                            reset(screenWidth: proxy.size.width, screenHeight: proxy.size.height)
+                        }
                     }
                 }
-            }
 
-            if isHoveringInfo {
-                GameInfoView()
-                    .overlayStyle()
+                if gameState == .setting {
+                    GameSettingsView(rowCount: $rowCount, colCount: $colCount) {
+                        withAnimation(.spring(duration: 1)) {
+                            createGrid(rowCount: rowCount, colCount: colCount, screenWidth: proxy.size.width, screenHeight: proxy.size.height)
+                            gameState = .waiting
+                        }
+                    }
+                }
+
+                if isHoveringInfo {
+                    GameInfoView()
+                        .overlayStyle()
+                }
+            }
+            .frame(width: proxy.size.width, height: proxy.size.height, alignment: .center)
+            .onChange(of: proxy.size) { _, newValue in
+                resizeSquare(screenWidth: newValue.width, screenHeight: newValue.height)
+//                print(proxy.size.width, proxy.size.height)
             }
         }
-        .frame(width: frameWidth, height: frameHeight)
     }
 }
 
@@ -169,7 +178,7 @@ extension ContentView {
         } else {
             switch gameState {
             case .setting, .waiting, .playing:
-                "😬"
+                "😊"
             case .won:
                 "🥳"
             case .lost:
@@ -177,6 +186,11 @@ extension ContentView {
             }
         }
     }
+    
+    var textSize: CGFloat {
+        infoHeight/4
+    }
+    
     var allSquares: [Square] {
         rows.flatMap { $0 }
     }
@@ -254,13 +268,19 @@ extension ContentView {
             reveal(neighbor)
         }
     }
+    
+    func resizeInfoHeight(screenWidth: Double, screenHeight: Double) {
+        infoHeight = 0.1*screenHeight
+    }
+    
+    func resizeSquare(screenWidth: Double, screenHeight: Double) {
+        squareSize = max(min(screenWidth - infoHeight, screenHeight-1.5*infoHeight), 1) / CGFloat(max(colCount, rowCount))
+    }
 
-    func createGrid(rowCount: Int = 10, colCount: Int = 10) {
+    func createGrid(rowCount: Int = 10, colCount: Int = 10, screenWidth: Double, screenHeight: Double) {
         rows.removeAll()
         withAnimation(.spring(duration: 0.25)) {
-            squareSize = 750.0 / CGFloat(max(colCount, rowCount))
-            frameWidth = CGFloat(colCount) * squareSize
-            frameHeight = CGFloat(rowCount) * squareSize
+            squareSize = max(min(screenWidth - infoHeight, screenHeight-1.5*infoHeight), 1) / CGFloat(max(colCount, rowCount))
             for row in 0..<rowCount {
                 var gridRow = [Square]()
                 for col in 0..<colCount {
@@ -316,11 +336,11 @@ extension ContentView {
         }
     }
 
-    func reset() {
+    func reset(screenWidth: Double, screenHeight: Double) {
         secondsElapsed = 0
         gameState = .setting
         lifesLeft = 3
-        createGrid(rowCount: rowCount, colCount: colCount)
+        createGrid(rowCount: rowCount, colCount: colCount, screenWidth: screenWidth, screenHeight: screenHeight)
     }
 }
 

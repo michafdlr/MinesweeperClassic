@@ -12,15 +12,11 @@
       }
     },
     "💣" : {
-
-    },
-    "💥" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "💥"
+            "value" : "💣"
           }
         }
       }
