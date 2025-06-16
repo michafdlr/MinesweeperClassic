@@ -17,6 +17,7 @@ struct OverlayView: ViewModifier {
             .frame(maxWidth: .infinity)
             .background(.black.opacity(0.75).gradient)
             .clipShape(.rect(cornerRadius: 10))
+            .padding(.horizontal)
     }
 }
 

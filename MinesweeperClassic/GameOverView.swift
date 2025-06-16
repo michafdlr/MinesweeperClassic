@@ -5,8 +5,9 @@
 //  Created by Michael Fiedler on 27.05.25.
 //
 
+import StoreKit
 import SwiftUI
-import Vortex
+//import Vortex
 
 struct GameOverView: View {
     var gameState: GameState
@@ -16,20 +17,29 @@ struct GameOverView: View {
 
     @State private var animateExplosion = false
     @State private var oldRecord = 0
+    
+    @Environment(\.requestReview) private var requestReview
+    
+    @AppStorage("numberOfGames") private var numberOfGames = 0
 
     var body: some View {
         GeometryReader { context in
             ZStack {
+//                if gameState == .won {
+//                    VortexView(.fireworks) {
+//                        Image(systemName: "star.fill")
+//                            .font(.system(size: 60))
+//                            .foregroundStyle(.white)
+//                            .blur(radius: 3)
+//                            .blendMode(.plusLighter)
+//                            .frame(width: 32)
+//                            .tag("circle")
+//                    }
+//                }
                 if gameState == .won {
-                    VortexView(.fireworks) {
-                        Image(systemName: "star.fill")
-                            .font(.system(size: 60))
-                            .foregroundStyle(.white)
-                            .blur(radius: 3)
-                            .blendMode(.plusLighter)
-                            .frame(width: 32)
-                            .tag("circle")
-                    }
+                    ParticleSimulationView(tag: "star")
+                } else if gameState == .lost {
+                    ParticleSimulationView(tag: "mine")
                 }
                 
                 VStack(spacing: 10) {
@@ -66,12 +76,22 @@ struct GameOverView: View {
                     .multilineTextAlignment(.center)
 
                     Button(action: restart) {
-                        Text("Try Again")
-                            .padding(.horizontal)
-                            .padding(.vertical, 5)
-                            .foregroundStyle(.white)
-                            .background(.blue.gradient)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        if #available(iOS 26.0, macOS 26.0, *) {
+                            Text("Try Again")
+                                .padding(.horizontal)
+                                .padding(.vertical, 5)
+                                .foregroundStyle(.white)
+                                .background(.blue.gradient.opacity(0.8))
+                                .clipShape(Capsule())
+                                .glassEffect()
+                        } else {
+                            Text("Try Again")
+                                .padding(.horizontal)
+                                .padding(.vertical, 5)
+                                .foregroundStyle(.white)
+                                .background(.blue.gradient.opacity(0.8))
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
                     }
                     .font(.title)
                     .buttonStyle(.plain)
@@ -82,6 +102,10 @@ struct GameOverView: View {
             }
             .overlayStyle()
             .onAppear {
+                numberOfGames += 1
+                if numberOfGames > 0 && numberOfGames.isMultiple(of: 5) {
+                    requestReview()
+                }
                 if gameState == .won {
                     animateExplosion = true
                     oldRecord = getOldRecord(for: squareCount)
@@ -103,5 +127,5 @@ struct GameOverView: View {
 }
 
 #Preview {
-    GameOverView(gameState: .won, squareCount: 100, secondsElapsed: 50, restart: {})
+    GameOverView(gameState: .lost, squareCount: 100, secondsElapsed: 50, restart: {})
 }

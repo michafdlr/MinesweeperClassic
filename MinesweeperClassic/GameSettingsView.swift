@@ -45,8 +45,11 @@ struct GameSettingsView: View {
                     #endif
                 } label: {
                     Text("Rows")
-                        .font(.title3)
+                        .font(.title3.bold())
                 }
+                .frame(maxWidth: 120)
+                .padding(.trailing)
+                
                 
                 #if os(iOS)
                     Text("Columns")
@@ -66,20 +69,32 @@ struct GameSettingsView: View {
                     #endif
                 } label: {
                     Text("Columns")
-                        .font(.title3)
+                        .font(.title3.bold())
                 }
+                .frame(maxWidth: 120)
             }
-            .padding(.bottom)
-            .frame(width: 300)
+            .padding([.bottom, .horizontal])
+            .frame(maxWidth: .infinity)
 
             HStack {
                 Button(action: startGame) {
-                    Text("Start Game")
-                        .padding(.horizontal)
-                        .padding(.vertical, 5)
-                        .foregroundStyle(.white)
-                        .background(.blue.gradient)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    if #available(iOS 26.0, macOS 26.0, *) {
+                        Text("Play")
+                            .padding(.horizontal)
+                            .padding(.vertical, 5)
+                            .foregroundStyle(.white)
+                            .background(.blue.gradient.opacity(0.6), in: Capsule())
+                            .clipShape(Capsule())
+                            .glassEffect()
+                    } else {
+                        // Fallback on earlier versions
+                        Text("Play")
+                            .padding(.horizontal)
+                            .padding(.vertical, 5)
+                            .foregroundStyle(.white)
+                            .background(.blue.gradient)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
                 }
                 .font(.title)
                 .buttonStyle(.plain)
@@ -89,12 +104,23 @@ struct GameSettingsView: View {
                         recordsShowing.toggle()
                     }
                 } label: {
-                    Text(recordsShowing ? "Hide Records": "Show Records")
-                        .padding(.horizontal)
-                        .padding(.vertical, 5)
-                        .foregroundStyle(.white)
-                        .background(.gray.gradient)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    if #available(iOS 26.0, macOS 26.0, *) {
+                        Text(recordsShowing ? "Hide Records": "Show Records")
+                            .padding(.horizontal)
+                            .padding(.vertical, 5)
+                            .foregroundStyle(.white)
+                            .background(.gray.gradient.opacity(0.6), in: Capsule())
+                            .clipShape(Capsule())
+                            .glassEffect()
+                    } else {
+                        // Fallback on earlier versions
+                        Text(recordsShowing ? "Hide Records": "Show Records")
+                            .padding(.horizontal)
+                            .padding(.vertical, 5)
+                            .foregroundStyle(.white)
+                            .background(.gray.gradient)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
                 }
                 .font(.title)
                 .buttonStyle(.plain)
@@ -105,9 +131,17 @@ struct GameSettingsView: View {
                         isShowingInfo.toggle()
                     }
                 } label: {
-                    Image(systemName: "info.circle.fill")
-                        .font(.largeTitle)
-                        .foregroundStyle(.gray.opacity(0.8))
+                    if #available(iOS 26.0, macOS 26.0, *) {
+                        Image(systemName: "info.circle")
+                            .font(.largeTitle)
+                            .foregroundStyle(.gray.opacity(0.8))
+                            .glassEffect()
+                    } else {
+                        // Fallback on earlier versions
+                        Image(systemName: "info.circle.fill")
+                            .font(.largeTitle)
+                            .foregroundStyle(.gray.opacity(0.8))
+                    }
                 }
                 .buttonStyle(.plain)
             }

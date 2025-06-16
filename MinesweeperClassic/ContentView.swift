@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Vortex
 
 enum GameState {
     case setting, waiting, playing, won, lost
@@ -26,7 +25,7 @@ struct ContentView: View {
         on: .main,
         in: .common
     ).autoconnect()
-    @State private var squareSize = 00.0
+    @State private var squareSize = 0.0
     @State private var lifesLeft = 3
     
     @State private var infoHeight = 75.0
@@ -69,7 +68,7 @@ struct ContentView: View {
                                         .font(.custom("Courier", size: textSize))
                                 }
                                 .padding(5)
-                                .frame(width: 150)
+//                                .frame(idealWidth: 150, maxWidth: .infinity)
                                 .background(.gray.gradient.opacity(0.5))
                                 .clipShape(.rect(cornerRadius: 6))
                             }
@@ -108,6 +107,7 @@ struct ContentView: View {
                     }
                     .frame(width: proxy.size.width, height: infoHeight)
                     .padding([.top, .horizontal], 5)
+                    
 
                     Grid(horizontalSpacing: 2, verticalSpacing: 2) {
                         ForEach(0..<rows.count, id: \.self) { row in
@@ -165,7 +165,13 @@ struct ContentView: View {
             .frame(width: proxy.size.width, height: proxy.size.height, alignment: .center)
             .onChange(of: proxy.size) { _, newValue in
                 resizeSquare(screenWidth: newValue.width, screenHeight: newValue.height)
-//                print(proxy.size.width, proxy.size.height)
+            }
+            .onChange(of: gameState) { _, newValue in
+                if newValue == .won || newValue == .lost {
+                    withAnimation(.spring(duration: 1)) {
+                        revealAll()
+                    }
+                }
             }
         }
     }
@@ -267,6 +273,10 @@ extension ContentView {
         for neighbor in neighbors {
             reveal(neighbor)
         }
+    }
+    
+    func revealAll() {
+        allSquares.forEach { $0.isRevealed = true }
     }
     
     func resizeInfoHeight(screenWidth: Double, screenHeight: Double) {

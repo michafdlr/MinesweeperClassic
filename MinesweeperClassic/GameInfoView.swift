@@ -22,7 +22,6 @@ struct GameInfoView: View {
         }
         .fontDesign(.rounded)
         .padding()
-//        .overlayStyle()
     }
 }
 
