@@ -21,3 +21,29 @@ Es werden **keine Daten an Dritte weitergegeben**.
 ## 4. Kontakt
 
 Bei Fragen zur App oder zum Datenschutz kannst du dich direkt über github issues an mich wenden.
+
+---
+
+# Privacy Policy
+
+**Effective: June 2025**
+
+The app **MinesweeperClassic - The Game** (referred to as “the app”) respects your privacy. This app was designed to ensure that **no personal data is collected, stored, or shared with third parties**.
+
+## 1. What data is processed?
+
+The app does **not collect or process any personal data**. Only local game scores and records are saved on your device.
+
+## 2. Data Storage
+
+- All saved records are stored **locally on your iPad or Mac**.
+- There is **no synchronization** with servers or cloud services.
+- The app **does not require an internet connection**.
+
+## 3. Data Sharing
+
+**No data is shared with third parties.**
+
+## 4. Contact
+
+If you have any questions about the app or this privacy policy, feel free to contact me via Github issues.
