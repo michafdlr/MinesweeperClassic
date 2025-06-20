@@ -85,7 +85,7 @@ struct GameSettingsView: View {
                             .foregroundStyle(.white)
                             .background(.blue.gradient.opacity(0.6), in: Capsule())
                             .clipShape(Capsule())
-                            .glassEffect()
+//                            .glassEffect()
                     } else {
                         // Fallback on earlier versions
                         Text("Play")
@@ -111,7 +111,7 @@ struct GameSettingsView: View {
                             .foregroundStyle(.white)
                             .background(.gray.gradient.opacity(0.6), in: Capsule())
                             .clipShape(Capsule())
-                            .glassEffect()
+//                            .glassEffect()
                     } else {
                         // Fallback on earlier versions
                         Text(recordsShowing ? "Hide Records": "Show Records")
@@ -135,7 +135,7 @@ struct GameSettingsView: View {
                         Image(systemName: "info.circle")
                             .font(.largeTitle)
                             .foregroundStyle(.gray.opacity(0.8))
-                            .glassEffect()
+//                            .glassEffect()
                     } else {
                         // Fallback on earlier versions
                         Image(systemName: "info.circle.fill")

@@ -25,17 +25,6 @@ struct GameOverView: View {
     var body: some View {
         GeometryReader { context in
             ZStack {
-//                if gameState == .won {
-//                    VortexView(.fireworks) {
-//                        Image(systemName: "star.fill")
-//                            .font(.system(size: 60))
-//                            .foregroundStyle(.white)
-//                            .blur(radius: 3)
-//                            .blendMode(.plusLighter)
-//                            .frame(width: 32)
-//                            .tag("circle")
-//                    }
-//                }
                 if gameState == .won {
                     ParticleSimulationView(tag: "star")
                 } else if gameState == .lost {
@@ -83,7 +72,7 @@ struct GameOverView: View {
                                 .foregroundStyle(.white)
                                 .background(.blue.gradient.opacity(0.8))
                                 .clipShape(Capsule())
-                                .glassEffect()
+//                                .glassEffect()
                         } else {
                             Text("Try Again")
                                 .padding(.horizontal)

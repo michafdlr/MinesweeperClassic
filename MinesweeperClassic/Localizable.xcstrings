@@ -11,17 +11,6 @@
         }
       }
     },
-    "💣" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💣"
-          }
-        }
-      }
-    },
     "Cancel" : {
       "localizations" : {
         "de" : {
